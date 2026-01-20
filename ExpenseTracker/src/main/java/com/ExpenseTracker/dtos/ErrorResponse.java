@@ -6,10 +6,16 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-@AllArgsConstructor
 public class ErrorResponse {
     private LocalDateTime timeStamp;
     private int status;
     private String errorCode;
     private String message;
+
+    public ErrorResponse(LocalDateTime timeStamp, int status, String errorCode, String message) {
+        this.timeStamp = timeStamp;
+        this.status = status;
+        this.errorCode = errorCode;
+        this.message = message;
+    }
 }
