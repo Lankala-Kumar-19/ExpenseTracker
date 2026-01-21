@@ -19,8 +19,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    /* ================= REGISTER ================= */
-
     @PostMapping
     public ResponseEntity<UserResponseDTO> register(
             @Valid @RequestBody UserRequestDTO dto) {
@@ -28,14 +26,12 @@ public class UserController {
         return ResponseEntity.ok(userService.register(dto));
     }
 
-    /* ================= READ ================= */
 
     @GetMapping
     public ResponseEntity<Page<UserResponseDTO>> getAllUsers(Pageable pageable) {
         return ResponseEntity.ok(userService.getAllUsers(pageable));
     }
 
-    /* ================= UPDATE ================= */
 
     @PutMapping("/id/{id}")
     public ResponseEntity<UserResponseDTO> updateUserById(
@@ -53,7 +49,6 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUserByUsername(username, dto));
     }
 
-    /* ================= DELETE ================= */
 
     @DeleteMapping("/id/{id}")
     public ResponseEntity<UserResponseDTO> deleteUser(@PathVariable int id) {
