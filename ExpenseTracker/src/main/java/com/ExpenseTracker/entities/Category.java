@@ -15,6 +15,7 @@ public class Category {
     private String name;
 
     @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
     private Users user;
 }
 
