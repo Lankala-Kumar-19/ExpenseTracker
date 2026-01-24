@@ -1,5 +1,6 @@
 package com.ExpenseTracker.services;
 
+import com.ExpenseTracker.ENUMs.Role;
 import com.ExpenseTracker.dtos.UserRequestDTO;
 import com.ExpenseTracker.dtos.UserResponseDTO;
 import com.ExpenseTracker.entities.Users;
@@ -9,6 +10,7 @@ import com.ExpenseTracker.mappers.UserMapper;
 import com.ExpenseTracker.repos.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,10 +18,12 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     private Users getUserByUsername(String username) {
@@ -42,6 +46,8 @@ public class UserService {
         }
 
         Users user = userMapper.toEntity(dto);
+        user.setRole(Role.USER);
+        user.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         return userMapper.toDTO(userRepository.save(user));
     }
 

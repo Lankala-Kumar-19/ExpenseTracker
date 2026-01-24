@@ -19,7 +19,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<UserResponseDTO> register(
             @Valid @RequestBody UserRequestDTO dto) {
 
