@@ -3,7 +3,7 @@
 🚧 **Work in Progress** 🚧  
 
 This is a Spring Boot–based backend for an Expense Tracker application.  
-Currently, the project implements **basic User CRUD operations**.
+Currently, the project implements **basic User CRUD operations** and **user authentication & authorization** using Spring Security.  
 
 ---
 
@@ -16,6 +16,9 @@ Currently, the project implements **basic User CRUD operations**.
 - Delete user by:
   - ID
   - Username
+- **Secure authentication using Spring Security**
+- **Password hashing with BCrypt**
+- **Role-based access setup** (ready for admin/regular users)
 
 ---
 
@@ -24,24 +27,24 @@ Currently, the project implements **basic User CRUD operations**.
 - Spring Boot
 - Spring Web
 - Spring Data JPA
+- Spring Security
 - REST APIs
 - Pagination using `Pageable`
-
 
 ---
 
 ## Status
 - ✅ User CRUD completed
+- ✅ Authentication & Authorization integrated
 - ⏳ Expense module (planned)
-- ⏳ Authentication & Authorization (planned)
 - ⏳ Validation & Exception handling (planned)
 
 ---
 
 ## Future Enhancements
 - Expense CRUD operations
-- JWT-based authentication
-- Role-based access control
+- JWT-based authentication for stateless APIs
+- Full role-based access control
 - Global exception handling
 - Input validation
 - Swagger/OpenAPI documentation
@@ -58,5 +61,5 @@ Currently, the project implements **basic User CRUD operations**.
 
 ## Notes
 This project is under active development.  
-APIs and structure may change as new features are added.
-
+APIs and structure may change as new features are added.  
+Spring Security integration ensures that user data is protected and the backend is production-ready.
