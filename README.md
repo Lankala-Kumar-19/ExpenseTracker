@@ -3,11 +3,13 @@
 🚧 **Work in Progress** 🚧  
 
 This is a Spring Boot–based backend for an Expense Tracker application.  
-Currently, the project implements **basic User CRUD operations** and **user authentication & authorization** using Spring Security.  
+The project currently implements **User CRUD operations** along with **secure authentication and authorization using Spring Security and JWT**.
 
 ---
 
 ## Features (Implemented)
+
+### User Management
 - Create/Register a user
 - Get all users with pagination
 - Update user by:
@@ -16,9 +18,14 @@ Currently, the project implements **basic User CRUD operations** and **user auth
 - Delete user by:
   - ID
   - Username
-- **Secure authentication using Spring Security**
-- **Password hashing with BCrypt**
-- **Role-based access setup** (ready for admin/regular users)
+
+### Security & Authentication
+- User authentication using Spring Security
+- JWT-based stateless authentication
+- Secure login endpoint that issues JWT tokens
+- Password hashing using BCrypt
+- Role-based access setup (ready for admin & regular users)
+- Custom JWT filter for request validation
 
 ---
 
@@ -28,6 +35,7 @@ Currently, the project implements **basic User CRUD operations** and **user auth
 - Spring Web
 - Spring Data JPA
 - Spring Security
+- JWT (JSON Web Tokens)
 - REST APIs
 - Pagination using `Pageable`
 
@@ -35,7 +43,8 @@ Currently, the project implements **basic User CRUD operations** and **user auth
 
 ## Status
 - ✅ User CRUD completed
-- ✅ Authentication & Authorization integrated
+- ✅ Spring Security integrated
+- ✅ JWT authentication implemented
 - ⏳ Expense module (planned)
 - ⏳ Validation & Exception handling (planned)
 
@@ -43,11 +52,11 @@ Currently, the project implements **basic User CRUD operations** and **user auth
 
 ## Future Enhancements
 - Expense CRUD operations
-- JWT-based authentication for stateless APIs
 - Full role-based access control
 - Global exception handling
 - Input validation
 - Swagger/OpenAPI documentation
+- Refresh tokens & token expiration handling
 
 ---
 
@@ -56,10 +65,12 @@ Currently, the project implements **basic User CRUD operations** and **user auth
 2. Open the project in IntelliJ IDEA / Eclipse
 3. Configure database details in `application.properties`
 4. Run the Spring Boot application
+5. Use the `/login` endpoint to authenticate and obtain a JWT
 
 ---
 
 ## Notes
 This project is under active development.  
-APIs and structure may change as new features are added.  
-Spring Security integration ensures that user data is protected and the backend is production-ready.
+APIs and structure may evolve as new features are added.  
+
+The backend follows **stateless, production-ready authentication practices** using JWT and Spring Security, making it suitable for real-world RESTful applications.
