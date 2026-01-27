@@ -31,7 +31,7 @@ public class Users {
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     private List<Expense> expenses;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,orphanRemoval = true,cascade = CascadeType.ALL)
     private List<Category> categories;
 
 }

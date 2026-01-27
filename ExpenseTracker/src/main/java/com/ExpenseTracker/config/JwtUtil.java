@@ -12,7 +12,7 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final String SECERT_KEY = "abc-def-ghi-jkl-mno-pqr-stu-vwx-yz";
+    private final String SECERT_KEY = "my-super-secret-key-for-hs256-algorithm-123456";
     private final long exp = 1000*60*60;
 
     private Key getSigningKey(){
@@ -39,7 +39,7 @@ public class JwtUtil {
                     .getBody()
                     .getSubject();
         }catch (Exception e){
-            return "username not there";
+            return null;
         }
     }
     private boolean isTokenExpired(String token){

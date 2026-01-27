@@ -32,6 +32,11 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers(pageable));
     }
 
+    @GetMapping("/username/{username}")
+    public ResponseEntity<UserResponseDTO> getUserByUsername(@PathVariable String username){
+        return ResponseEntity.ok(userService.getUserByUsernamee(username));
+
+    }
 
     @PutMapping("/id/{id}")
     public ResponseEntity<UserResponseDTO> updateUserById(
@@ -55,7 +60,7 @@ public class UserController {
         return ResponseEntity.ok(userService.deleteUser(id));
     }
 
-    @DeleteMapping("/username/{username}")
+    @DeleteMapping("/{username}")
     public ResponseEntity<UserResponseDTO> deleteUserByUsername(
             @PathVariable String username) {
 

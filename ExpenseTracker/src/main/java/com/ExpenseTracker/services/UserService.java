@@ -26,10 +26,14 @@ public class UserService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    private Users getUserByUsername(String username) {
+    public Users getUserByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() ->
                         new UserNotFoundException("User with username: " + username + " not found"));
+    }
+
+    public UserResponseDTO getUserByUsernamee(String username) {
+        return userMapper.toDTO(getUserByUsername(username));
     }
 
     private Users getUserById(int id) {
@@ -46,7 +50,7 @@ public class UserService {
         }
 
         Users user = userMapper.toEntity(dto);
-        user.setRole(Role.USER);
+        user.setRole(Role.ADMIN);
         user.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         return userMapper.toDTO(userRepository.save(user));
     }

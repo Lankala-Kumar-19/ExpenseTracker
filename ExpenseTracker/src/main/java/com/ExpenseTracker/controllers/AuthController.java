@@ -38,6 +38,6 @@ public class AuthController {
 
         String username = jwtUtil.getUsername(token);
         System.out.println(username+" "+dto.getUsername());
-        return ResponseEntity.ok(token +" "+username);
+        return ResponseEntity.ok(token);
     }
 }

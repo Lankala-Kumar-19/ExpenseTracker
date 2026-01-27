@@ -1,0 +1,77 @@
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+/* Full-screen background */
+.hero {
+  width: 493%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top-right buttons */
+.top-right-buttons {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 30px;
+}
+
+.top-right-buttons button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  transition: 0.3s;
+}
+
+.top-right-buttons button:hover {
+  background-color: rgba(0,128,255,0.7);
+}
+
+/* Center text using flex */
+.auth-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* vertical center */
+  align-items: center;     /* horizontal center */
+  text-align: center;
+  color: white;
+  padding: 0 20px;        /* prevent overflow on small screens */
+}
+
+.auth-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.auth-container p {
+  font-size: 1.2rem;
+  max-width: 600px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .top-right-buttons button {
+    padding: 8px 15px;
+    font-size: 14px;
+  }
+
+  .auth-container h1 {
+    font-size: 2rem;
+  }
+
+  .auth-container p {
+    font-size: 1rem;
+  }
+}
