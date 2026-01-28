@@ -28,7 +28,7 @@ public class Users {
     @Column(nullable = false)
     private Role role;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,orphanRemoval = true)
     private List<Expense> expenses;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,orphanRemoval = true,cascade = CascadeType.ALL)

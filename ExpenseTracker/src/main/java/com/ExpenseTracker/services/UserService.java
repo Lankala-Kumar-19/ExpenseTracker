@@ -42,7 +42,7 @@ public class UserService {
                         new UserNotFoundException("User with id: " + id + " not found"));
     }
 
-    /* ================= REGISTER ================= */
+
 
     public UserResponseDTO register(UserRequestDTO dto) {
         if (userRepository.findByUsername(dto.getUsername()).isPresent()) {
@@ -55,14 +55,11 @@ public class UserService {
         return userMapper.toDTO(userRepository.save(user));
     }
 
-    /* ================= READ ================= */
 
     public Page<UserResponseDTO> getAllUsers(Pageable pageable) {
         return userRepository.findAll(pageable)
                 .map(userMapper::toDTO);
     }
-
-    /* ================= UPDATE ================= */
 
     public UserResponseDTO updateUserById(int id, UserRequestDTO dto) {
         Users user = getUserById(id);

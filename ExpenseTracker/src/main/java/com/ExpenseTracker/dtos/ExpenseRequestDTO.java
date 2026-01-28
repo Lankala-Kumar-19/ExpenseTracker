@@ -24,7 +24,7 @@ public class ExpenseRequestDTO {
     private ExpenseType type;
 
     @NotNull
-    private  int categoryId;
+    private  String categoryName;
 
 
 }
