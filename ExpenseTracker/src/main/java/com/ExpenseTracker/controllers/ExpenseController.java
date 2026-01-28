@@ -35,9 +35,9 @@ public class ExpenseController {
 
     }
 
-    @PutMapping("/{title}")
-    public ResponseEntity<ExpenseResponseDTO> updateExpenseByTitle(@PathVariable String title ,@Valid @RequestBody ExpenseRequestDTO dto){
-        return ResponseEntity.ok(expenseService.updateExpenseByTitle(title,dto));
+    @PutMapping("/{id}")
+    public ResponseEntity<ExpenseResponseDTO> updateExpenseById(@PathVariable int id ,@Valid @RequestBody ExpenseRequestDTO dto){
+        return ResponseEntity.ok(expenseService.updateExpenseById(id,dto));
     }
 
     @DeleteMapping("/delete/{id}")
@@ -49,5 +49,11 @@ public class ExpenseController {
     public ResponseEntity<Page<ExpenseResponseDTO>> getExpenseByType(@PathVariable ExpenseType type, Pageable pageable){
         return ResponseEntity.ok(expenseService.getExpenseByType(type,pageable));
     }
+
+    @GetMapping("/title/{title}")
+    public ResponseEntity<Page<ExpenseResponseDTO>> getExpenseByTitle(@PathVariable String title,Pageable pageable){
+        return ResponseEntity.ok(expenseService.getExpenseByTitle(title,pageable));
+    }
+
 
 }

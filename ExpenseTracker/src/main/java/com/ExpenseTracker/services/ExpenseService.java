@@ -38,11 +38,12 @@ public class ExpenseService {
         this.userRepository = userRepository;
     }
 
+
     public ExpenseResponseDTO addExpense(@Valid ExpenseRequestDTO dto) {
         Expense expense = expenseMapper.toEntity(dto);
 
         expense.setDate(LocalDateTime.now());
-        Category category = categoryRepository.findByName(dto.getCategoryName()).orElseThrow(CategoryNotFoundException::new);
+        Category category = categoryRepository.findByName(dto.getCategoryName().toUpperCase()).orElseThrow(CategoryNotFoundException::new);
         expense.setCategory(category);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Users user = userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
@@ -66,10 +67,10 @@ public class ExpenseService {
 
     }
 
-    public ExpenseResponseDTO updateExpenseByTitle(String title, @Valid ExpenseRequestDTO dto) {
-        Expense expense = expenseRepository.findByTitle(title).orElseThrow(ExpenseNotFoundException::new);
+    public ExpenseResponseDTO updateExpenseById(int id, @Valid ExpenseRequestDTO dto) {
+        Expense expense = expenseRepository.findById(id).orElseThrow(ExpenseNotFoundException::new);
 
-        Category category = categoryRepository.findByName(dto.getCategoryName()).orElseThrow(CategoryNotFoundException::new);
+        Category category = categoryRepository.findByName(dto.getCategoryName().toUpperCase()).orElseThrow(CategoryNotFoundException::new);
         expense.setTitle(dto.getTitle());
         expense.setAmount(dto.getAmount());
 
@@ -90,8 +91,14 @@ public class ExpenseService {
     }
 
     public Page<ExpenseResponseDTO> getExpenseByType(ExpenseType type, Pageable pageable) {
-
         Page<Expense> expenses = expenseRepository.findByType(type,pageable);
+
+        return expenses.map(expenseMapper::toDTO);
+    }
+
+    public Page<ExpenseResponseDTO> getExpenseByTitle(String title, Pageable pageable) {
+
+        Page<Expense> expenses = expenseRepository.findByTitle(title);
 
         return expenses.map(expenseMapper::toDTO);
     }
