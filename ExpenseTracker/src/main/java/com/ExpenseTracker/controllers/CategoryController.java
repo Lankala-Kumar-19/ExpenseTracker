@@ -18,35 +18,33 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-
-    CategoryController(CategoryService categoryService){
+    public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
-
     }
 
-
-    @PostMapping("/addCategory")
+    @PostMapping
     public ResponseEntity<CategoryResponseDTO> createCategory(@Valid @RequestBody CategoryRequestDTO dto){
-        return ResponseEntity.ok(categoryService.createCategory(dto));
+        return ResponseEntity.status(201).body(categoryService.createCategory(dto));
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<Page<CategoryResponseDTO>> getAllCategories(Pageable pageable){
-        return ResponseEntity.ok().body(categoryService.getAllCategories(pageable));
+        return ResponseEntity.ok(categoryService.getAllCategories(pageable));
     }
 
-    @GetMapping("/{name}")
-    public ResponseEntity<CategoryResponseDTO> getCategoryByName(@PathVariable String name){
-        return ResponseEntity.ok(categoryService.getCategoryByName(name));
+    @GetMapping("/{id}")
+    public ResponseEntity<CategoryResponseDTO> getCategoryById(@PathVariable int id){
+        return ResponseEntity.ok(categoryService.getCategoryById(id));
     }
 
-    @PutMapping("{name}")
-    public ResponseEntity<CategoryResponseDTO> updateCategoryByName(@PathVariable String name,@Valid @RequestBody CategoryRequestDTO dto){
-        return ResponseEntity.ok(categoryService.updateCategoryByName(name,dto));
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoryResponseDTO> updateCategory(@PathVariable int id, @Valid @RequestBody CategoryRequestDTO dto){
+        return ResponseEntity.ok(categoryService.updateCategory(id, dto));
     }
 
-    @DeleteMapping("/delete/{name}")
-    public ResponseEntity<String> deleteCategory(@PathVariable String name){
-        return ResponseEntity.ok(categoryService.deleteCategory(name));
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable int id){
+        categoryService.deleteCategory(id);
+        return ResponseEntity.noContent().build();
     }
 }

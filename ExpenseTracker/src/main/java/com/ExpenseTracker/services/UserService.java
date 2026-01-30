@@ -36,10 +36,14 @@ public class UserService {
         return userMapper.toDTO(getUserByUsername(username));
     }
 
-    private Users getUserById(int id) {
+    public Users getUserById(int id) {
         return userRepository.findById(id)
                 .orElseThrow(() ->
                         new UserNotFoundException("User with id: " + id + " not found"));
+    }
+
+    public UserResponseDTO getUserBy_Id(int id){
+        return userMapper.toDTO(getUserById(id));
     }
 
 

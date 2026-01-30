@@ -1,7 +1,7 @@
 package com.ExpenseTracker.exceptions;
 
 public class DuplicateCategoryException extends RuntimeException{
-    DuplicateCategoryException(){
+    public DuplicateCategoryException(){
         super();
     }
     public DuplicateCategoryException(String msg){

@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,12 +20,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/register")
+    @PostMapping
     public ResponseEntity<UserResponseDTO> register(
             @Valid @RequestBody UserRequestDTO dto) {
 
-        return ResponseEntity.ok(userService.register(dto));
+        return ResponseEntity.status(201).body(userService.register(dto));
     }
+
 
 
     @GetMapping
@@ -32,10 +34,14 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers(pageable));
     }
 
+    @GetMapping("id/{id}")
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable int id){
+        return ResponseEntity.ok(userService.getUserBy_Id(id));
+    }
+
     @GetMapping("/username/{username}")
     public ResponseEntity<UserResponseDTO> getUserByUsername(@PathVariable String username){
         return ResponseEntity.ok(userService.getUserByUsernamee(username));
-
     }
 
     @PutMapping("/id/{id}")
@@ -56,14 +62,17 @@ public class UserController {
 
 
     @DeleteMapping("/id/{id}")
-    public ResponseEntity<UserResponseDTO> deleteUser(@PathVariable int id) {
-        return ResponseEntity.ok(userService.deleteUser(id));
+    public ResponseEntity<Void> deleteUser(@PathVariable int id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{username}")
-    public ResponseEntity<UserResponseDTO> deleteUserByUsername(
+    @DeleteMapping("/username/{username}")
+    public ResponseEntity<Void> deleteUserByUsername(
             @PathVariable String username) {
-
-        return ResponseEntity.ok(userService.deleteUserByUsername(username));
+        userService.deleteUserByUsername(username);
+        return ResponseEntity.noContent().build();
     }
+
+
 }

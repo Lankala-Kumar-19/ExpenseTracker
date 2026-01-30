@@ -13,59 +13,32 @@ import java.time.LocalDateTime;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleUserNotFound(UserNotFoundException ex){
-        ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.NOT_FOUND.value(),
-                "NOT_FOUND",
-                ex.getMessage()
-        );
-
-        return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
+    public ResponseEntity<ErrorResponse> handleUserNotFound(UserNotFoundException ex) {
+        return buildError(ErrorCode.USER_NOT_FOUND, ex.getMessage());
     }
 
     @ExceptionHandler(DulpicateUsernameException.class)
-    public ResponseEntity<ErrorResponse> handleDuplicateUsername(DulpicateUsernameException ex){
-        ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
-                "BAD_REQUEST",
-                ex.getMessage()
-        );
-        return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ErrorResponse> handleDuplicateUsername(DulpicateUsernameException ex) {
+        return buildError(ErrorCode.DUPLICATE_USERNAME, ex.getMessage());
     }
 
-    @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleCategoryNotFound(CategoryNotFoundException ex){
-        ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.NOT_FOUND.value(),
-                "NOT_FOUND",
-                ex.getMessage()
-        );
-        return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleCategoryNotFound(CategoryNotFoundException ex) {
+        return buildError(ErrorCode.CATEGORY_NOT_FOUND, ex.getMessage());
     }
 
-    @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleExpenseNotFound(ExpenseNotFoundException ex){
-        ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.NOT_FOUND.value(),
-                "EXPENSE_NOT_FOUND",
-                ex.getMessage()
-        );
-        return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
+    @ExceptionHandler(ExpenseNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleExpenseNotFound(ExpenseNotFoundException ex) {
+        return buildError(ErrorCode.EXPENSE_NOT_FOUND, ex.getMessage());
     }
 
-    @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleDuplicateCategory(DuplicateCategoryException ex){
-        ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
-                "DUPLICATE_CATEGORY",
-                ex.getMessage()
-        );
-        return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(DuplicateCategoryException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicateCategory(DuplicateCategoryException ex) {
+        return buildError(ErrorCode.DUPLICATE_CATEGORY, ex.getMessage());
     }
 
+    private ResponseEntity<ErrorResponse> buildError(ErrorCode errorCode, String message) {
+        ErrorResponse errorResponse = ErrorResponse.of(errorCode, message);
+        return new ResponseEntity<>(errorResponse, errorCode.getHttpStatus());
+    }
 }

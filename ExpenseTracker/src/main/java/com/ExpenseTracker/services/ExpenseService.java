@@ -1,6 +1,5 @@
 package com.ExpenseTracker.services;
 
-
 import com.ExpenseTracker.ENUMs.ExpenseType;
 import com.ExpenseTracker.dtos.ExpenseRequestDTO;
 import com.ExpenseTracker.dtos.ExpenseResponseDTO;
@@ -21,7 +20,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class ExpenseService {
@@ -31,75 +29,122 @@ public class ExpenseService {
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
 
-    ExpenseService(ExpenseRepository expenseRepository,ExpenseMapper expenseMapper, CategoryRepository categoryRepository, UserRepository userRepository){
-        this.expenseRepository=expenseRepository;
+    public ExpenseService(
+            ExpenseRepository expenseRepository,
+            ExpenseMapper expenseMapper,
+            CategoryRepository categoryRepository,
+            UserRepository userRepository
+    ) {
+        this.expenseRepository = expenseRepository;
         this.expenseMapper = expenseMapper;
         this.categoryRepository = categoryRepository;
         this.userRepository = userRepository;
     }
 
 
+    private Users getLoggedInUser() {
+        String username = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+
+        return userRepository.findByUsername(username)
+                .orElseThrow(UserNotFoundException::new);
+    }
+
+
     public ExpenseResponseDTO addExpense(@Valid ExpenseRequestDTO dto) {
+
+        Users user = getLoggedInUser();
+
+        Category category = categoryRepository
+                .findByUserAndName(user, dto.getCategoryName().trim().toUpperCase())
+                .orElseThrow(CategoryNotFoundException::new);
+
         Expense expense = expenseMapper.toEntity(dto);
-
         expense.setDate(LocalDateTime.now());
-        Category category = categoryRepository.findByName(dto.getCategoryName().toUpperCase()).orElseThrow(CategoryNotFoundException::new);
-        expense.setCategory(category);
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Users user = userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
-
         expense.setUser(user);
+        expense.setCategory(category);
+
         expenseRepository.save(expense);
         return expenseMapper.toDTO(expense);
     }
+
+
 
     public Page<ExpenseResponseDTO> getAllExpenses(Pageable pageable) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Users user = userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
-
-        Page<Expense> expenses = expenseRepository.findByUser(user,pageable);
-        return expenses.map(expenseMapper::toDTO);
-
-
-//        List<Expense> expenseList = user.getExpenses();
-//        return (Page<ExpenseResponseDTO>) expenseMapper.toDTOList(expenseList);
-
-
+        Users user = getLoggedInUser();
+        return expenseRepository.findByUser(user, pageable)
+                .map(expenseMapper::toDTO);
     }
 
-    public ExpenseResponseDTO updateExpenseById(int id, @Valid ExpenseRequestDTO dto) {
-        Expense expense = expenseRepository.findById(id).orElseThrow(ExpenseNotFoundException::new);
+    public ExpenseResponseDTO getExpenseById(int id) {
+        Users user = getLoggedInUser();
 
-        Category category = categoryRepository.findByName(dto.getCategoryName().toUpperCase()).orElseThrow(CategoryNotFoundException::new);
+        Expense expense = expenseRepository
+                .findByUserAndId(user, id)
+                .orElseThrow(ExpenseNotFoundException::new);
+
+        return expenseMapper.toDTO(expense);
+    }
+
+    public Page<ExpenseResponseDTO> getExpensesByType(
+            ExpenseType type, Pageable pageable
+    ) {
+        Users user = getLoggedInUser();
+        return expenseRepository.findByUserAndType(user, type, pageable)
+                .map(expenseMapper::toDTO);
+    }
+
+    public Page<ExpenseResponseDTO> getExpensesByCategory(
+            String categoryName, Pageable pageable
+    ) {
+        Users user = getLoggedInUser();
+        return expenseRepository
+                .findByUserAndCategory_Name(user, categoryName.trim().toUpperCase(), pageable)
+                .map(expenseMapper::toDTO);
+    }
+
+    public Page<ExpenseResponseDTO> getExpensesByTitle(
+            String title, Pageable pageable
+    ) {
+        Users user = getLoggedInUser();
+        return expenseRepository.findByUserAndTitle(user, title, pageable)
+                .map(expenseMapper::toDTO);
+    }
+
+
+
+    public ExpenseResponseDTO updateExpenseById(
+            int id, @Valid ExpenseRequestDTO dto
+    ) {
+        Users user = getLoggedInUser();
+
+        Expense expense = expenseRepository
+                .findByUserAndId(user, id)
+                .orElseThrow(ExpenseNotFoundException::new);
+
+        Category category = categoryRepository
+                .findByUserAndName(user, dto.getCategoryName().trim().toUpperCase())
+                .orElseThrow(CategoryNotFoundException::new);
+
         expense.setTitle(dto.getTitle());
-        expense.setAmount(dto.getAmount());
-
-        expense.setCategory(category);
         expense.setDescription(dto.getDescription());
+        expense.setAmount(dto.getAmount());
         expense.setType(dto.getType());
+        expense.setCategory(category);
 
         expenseRepository.save(expense);
-
         return expenseMapper.toDTO(expense);
-
     }
 
-    public ExpenseResponseDTO deleteExpenseById(int id) {
-        Expense expense = expenseRepository.findById(id).orElseThrow(ExpenseNotFoundException::new);
+
+    public void deleteExpenseById(int id) {
+        Users user = getLoggedInUser();
+
+        Expense expense = expenseRepository
+                .findByUserAndId(user, id)
+                .orElseThrow(ExpenseNotFoundException::new);
+
         expenseRepository.delete(expense);
-        return expenseMapper.toDTO(expense);
-    }
-
-    public Page<ExpenseResponseDTO> getExpenseByType(ExpenseType type, Pageable pageable) {
-        Page<Expense> expenses = expenseRepository.findByType(type,pageable);
-
-        return expenses.map(expenseMapper::toDTO);
-    }
-
-    public Page<ExpenseResponseDTO> getExpenseByTitle(String title, Pageable pageable) {
-
-        Page<Expense> expenses = expenseRepository.findByTitle(title);
-
-        return expenses.map(expenseMapper::toDTO);
     }
 }

@@ -1,5 +1,6 @@
 package com.ExpenseTracker.dtos;
 
+import com.ExpenseTracker.exceptions.ErrorCode;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -16,5 +17,13 @@ public class ErrorResponse {
         this.status = status;
         this.errorCode = errorCode;
         this.message = message;
+    }
+    public static ErrorResponse of(ErrorCode errorCode,String message){
+        return new ErrorResponse(
+                LocalDateTime.now(),
+                errorCode.getHttpStatus().value(),
+                errorCode.name(),
+                message
+        );
     }
 }

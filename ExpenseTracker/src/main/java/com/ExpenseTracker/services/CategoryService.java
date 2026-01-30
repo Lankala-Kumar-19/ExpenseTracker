@@ -6,12 +6,11 @@ import com.ExpenseTracker.dtos.CategoryResponseDTO;
 import com.ExpenseTracker.entities.Category;
 import com.ExpenseTracker.entities.Users;
 import com.ExpenseTracker.exceptions.CategoryNotFoundException;
-import com.ExpenseTracker.exceptions.DulpicateUsernameException;
+import com.ExpenseTracker.exceptions.DuplicateCategoryException;
 import com.ExpenseTracker.exceptions.UserNotFoundException;
 import com.ExpenseTracker.mappers.CategoryMapper;
 import com.ExpenseTracker.repos.CategoryRepository;
 import com.ExpenseTracker.repos.UserRepository;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,65 +24,66 @@ public class CategoryService {
     private final CategoryMapper categoryMapper;
     private final UserRepository userRepository;
 
-
-    CategoryService(CategoryRepository categoryRepository, CategoryMapper categoryMapper, UserRepository userRepository){
-        this.categoryRepository= categoryRepository;
-        this.userRepository = userRepository;
+    public CategoryService(CategoryRepository categoryRepository, CategoryMapper categoryMapper, UserRepository userRepository) {
+        this.categoryRepository = categoryRepository;
         this.categoryMapper = categoryMapper;
+        this.userRepository = userRepository;
     }
 
+    private Users getLoggedInUser() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+    }
 
     public CategoryResponseDTO createCategory(@Valid CategoryRequestDTO dto) {
-        String name = dto.getName().toUpperCase();
+        String name = dto.getName().trim().toUpperCase();
+        Users user = getLoggedInUser();
 
-        Category category = categoryRepository.findByName(name).orElse(null);
-        if(category!=null) throw new DulpicateUsernameException();
+        categoryRepository.findByUserAndName(user, name)
+                .ifPresent(c -> { throw new DuplicateCategoryException(); });
 
-        category = categoryMapper.toEntity(dto);
+        Category category = categoryMapper.toEntity(dto);
         category.setName(name);
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Users user = userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
         category.setUser(user);
 
         categoryRepository.save(category);
         return categoryMapper.toDTO(category);
-
     }
 
     public Page<CategoryResponseDTO> getAllCategories(Pageable pageable) {
-
-        System.out.println("working");
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Users user = userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
-
-        Page<Category> categories = categoryRepository.findByUser(user,pageable);
-
-        return categories.map(categoryMapper::toDTO);
+        Users user = getLoggedInUser();
+        return categoryRepository.findByUser(user, pageable)
+                .map(categoryMapper::toDTO);
     }
 
-    public String deleteCategory(String name) {
-        name = name.toUpperCase();
-        Category existing = categoryRepository.findByName(name).orElseThrow(CategoryNotFoundException::new);
-        categoryRepository.delete(existing);
-
-        return  existing.getName();
+    public CategoryResponseDTO getCategoryById(int id) {
+        Users user = getLoggedInUser();
+        Category category = categoryRepository.findByIdAndUser(id, user)
+                .orElseThrow(CategoryNotFoundException::new);
+        return categoryMapper.toDTO(category);
     }
 
-    public CategoryResponseDTO getCategoryByName(String name) {
-        name = name.toUpperCase();
-        Category existing = categoryRepository.findByName(name).orElseThrow(CategoryNotFoundException::new);
-        return categoryMapper.toDTO(existing);
+    public CategoryResponseDTO updateCategory(int id, @Valid CategoryRequestDTO dto) {
+        Users user = getLoggedInUser();
+        Category category = categoryRepository.findByIdAndUser(id, user)
+                .orElseThrow(CategoryNotFoundException::new);
+
+        String newName = dto.getName().trim().toUpperCase();
+
+        if (!category.getName().equalsIgnoreCase(newName)) {
+            categoryRepository.findByUserAndName(user, newName)
+                    .ifPresent(c -> { throw new DuplicateCategoryException(); });
+            category.setName(newName);
+        }
+
+        categoryRepository.save(category);
+        return categoryMapper.toDTO(category);
     }
 
-    public CategoryResponseDTO updateCategoryByName(String name, @Valid CategoryRequestDTO dto) {
-        name = name.toUpperCase();
-        Category existing = categoryRepository.findByName(name).orElseThrow(CategoryNotFoundException::new);
-
-        existing.setName(dto.getName().toUpperCase());
-        categoryRepository.save(existing);
-
-        return categoryMapper.toDTO(existing);
-
-
+    public void deleteCategory(int id) {
+        Users user = getLoggedInUser();
+        Category category = categoryRepository.findByIdAndUser(id, user)
+                .orElseThrow(CategoryNotFoundException::new);
+        categoryRepository.delete(category);
     }
 }

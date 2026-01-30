@@ -46,7 +46,15 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-                        .requestMatchers("/users/register","/login").permitAll()
+                        .requestMatchers(
+                                "/users/register",
+                                "/login",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**",
+                                "/webjars/**",
+                                "/swagger-resources/**"
+                        ).permitAll()
                         .anyRequest().authenticated())
 //                .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session->session

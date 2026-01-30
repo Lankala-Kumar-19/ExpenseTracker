@@ -3,6 +3,7 @@ package com.ExpenseTracker.controllers;
 import com.ExpenseTracker.config.CustomUserDetailsService;
 import com.ExpenseTracker.config.JwtUtil;
 import com.ExpenseTracker.dtos.LoginRequestDTO;
+import com.ExpenseTracker.dtos.LoginResponseDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,16 +29,14 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@Valid @RequestBody LoginRequestDTO dto){
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getUsername(),dto.getPassword()));
+    public ResponseEntity<LoginResponseDTO> login(@Valid @RequestBody LoginRequestDTO dto){
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getUsername(),dto.getPassword()));
 
-        UserDetails userDetails = customUserDetailsService.loadUserByUsername(dto.getUsername());
-        System.out.println(dto.getUsername());
+
         String token = jwtUtil.generateToken(dto.getUsername());
 
 
-        String username = jwtUtil.getUsername(token);
-        System.out.println(username+" "+dto.getUsername());
-        return ResponseEntity.ok(token);
+        LoginResponseDTO responseDTO = new LoginResponseDTO(token, "Bearer");
+        return ResponseEntity.ok(responseDTO);
     }
 }

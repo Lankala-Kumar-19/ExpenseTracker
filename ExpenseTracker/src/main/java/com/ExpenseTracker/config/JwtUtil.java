@@ -13,7 +13,7 @@ import java.util.Date;
 public class JwtUtil {
 
     private final String SECERT_KEY = "my-super-secret-key-for-hs256-algorithm-123456";
-    private final long exp = 1000*60*60;
+    private final long exp = 1000*60*60*4;
 
     private Key getSigningKey(){
         return Keys.hmacShaKeyFor(SECERT_KEY.getBytes());
