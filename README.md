@@ -1,151 +1,233 @@
-# Expense Tracker (Backend)
+💸 Expense Tracker Backend
 
-🚧 **Work in Progress** 🚧  
+A Spring Boot–based RESTful backend for an Expense Tracker application.
+This project provides secure user authentication, expense tracking, and category management, following clean architecture and production-ready practices.
 
-This is a Spring Boot–based backend for an Expense Tracker application.  
-The project currently implements **User CRUD operations** along with **secure authentication and authorization using Spring Security and JWT**.
+🚀 Overview
 
----
+The Expense Tracker backend allows users to:
 
-## Features (Implemented)
+Register and manage accounts
 
-### User Management
-- Create/Register a user
-- Get all users with pagination
-- Update user by:
-  - ID
-  - Username
-- Delete user by:
-  - ID
-  - Username
+Authenticate securely using JWT
 
-### Expense Management
-- Add a new expense
-- Retrieve expenses (with pagination)
-- Update and delete expenses by ID
-- Filter expenses by:
-  - Type (`ExpenseType` enum)
-  - Title
-  - Category
+Create, update, delete, and filter expenses
 
-### Category Management
-- Add a new category
-- Retrieve all categories (with pagination)
-- Get, update, or delete category by name
-- Prevent duplicate categories
+Organize expenses using categories
 
-### Security & Authentication
-- User authentication using Spring Security
-- JWT-based stateless authentication
-- Secure login endpoint that issues JWT tokens
-- Password hashing using BCrypt
-- Role-based access setup (ready for admin & regular users)
-- Custom JWT filter for request validation
+Handle errors consistently with structured responses
 
-### Exception Handling
-- Global exception handler using `@ControllerAdvice`
-- Custom exceptions for:
-  - User not found
-  - Duplicate username
-  - Expense not found
-  - Category not found
-  - Duplicate category
-- Returns structured error responses with timestamp, status, error, and message
+The application is stateless, scalable, and built using industry-standard Spring technologies.
 
-### Validation
-- Input validation for request DTOs using `@Valid`
-- Prevents invalid or incomplete data submissions
+🧱 Project Structure
+src/main/java/com/ExpenseTracker
+│
+├── config          # Security, JWT, and authentication config
+├── controllers     # REST controllers
+├── dtos            # Request & response DTOs
+├── entities        # JPA entities
+├── ENUMs           # Enums (ExpenseType, etc.)
+├── exceptions      # Custom exceptions & global handler
+├── mappers         # Entity ↔ DTO mappers
+├── repos           # Spring Data JPA repositories
+├── services        # Business logic
+│
+└── ExpenseTrackerApplication.java
 
----
+🔐 Security & Authentication
 
-## Tech Stack
-- Java
-- Spring Boot
-- Spring Web
-- Spring Data JPA
-- Spring Security
-- JWT (JSON Web Tokens)
-- REST APIs
-- Pagination using `Pageable`
+Spring Security–based authentication
 
----
+Stateless JWT authentication
 
-## API Endpoints
+Secure /login endpoint
 
-### Users
-| Method | Endpoint | Description |
-|--------|---------|-------------|
-| POST | `/users/register` | Register a new user |
-| GET | `/users/` | Get all users (paginated) |
-| PUT | `/users/{id}` | Update user by ID |
-| PUT | `/users/username/{username}` | Update user by username |
-| DELETE | `/users/{id}` | Delete user by ID |
-| DELETE | `/users/username/{username}` | Delete user by username |
+Password hashing using BCrypt
 
-### Expenses
-| Method | Endpoint | Description |
-|--------|---------|-------------|
-| POST | `/expenses/addExpense` | Add a new expense |
-| GET | `/expenses/` | Get all expenses (paginated) |
-| GET | `/expenses/type/{type}` | Filter expenses by type |
-| GET | `/expenses/title/{title}` | Filter expenses by title |
-| GET | `/expenses/category/{category}` | Filter expenses by category |
-| PUT | `/expenses/{id}` | Update expense by ID |
-| DELETE | `/expenses/delete/{id}` | Delete expense by ID |
+Custom JwtFilter for request validation
 
-### Categories
-| Method | Endpoint | Description |
-|--------|---------|-------------|
-| POST | `/categories/addCategory` | Add a new category |
-| GET | `/categories/` | Get all categories (paginated) |
-| GET | `/categories/{name}` | Get category by name |
-| PUT | `/categories/{name}` | Update category by name |
-| DELETE | `/categories/delete/{name}` | Delete category by name |
+Custom UserDetailsService implementation
 
----
+Authentication Flow
 
-## How to Run
-1. Clone the repository
-2. Open the project in IntelliJ IDEA / Eclipse
-3. Configure database details in `application.properties`
-4. Run the Spring Boot application
-5. Use the `/login` endpoint to authenticate and obtain a JWT
+User logs in via /login
 
----
+Credentials are authenticated using AuthenticationManager
 
-## Future Enhancements
+JWT token is generated and returned
 
-The following features are planned for upcoming versions of the Expense Tracker backend:
+Token is required for accessing protected endpoints
 
-### Security & Authentication
-- Full role-based access control for different user types (admin vs regular users)
-- Refresh tokens and token expiration handling
-- Multi-factor authentication (MFA) support
+✨ Features
+👤 User Management
 
-### API & Data Management
-- Advanced filtering, sorting, and reporting for expenses
-- Bulk import/export of expenses and categories
-- Recurring expense tracking
+Register a new user
 
-### User Experience
-- Email notifications for expense summaries or alerts
-- Improved input validation messages
-- Activity logs and audit trail for users
+Get all users (paginated)
 
-### Documentation & DevOps
-- Swagger/OpenAPI documentation for all endpoints
-- Integration with CI/CD pipelines for automated testing and deployment
-- Docker and Kubernetes support for containerized deployments
+Get user by username
 
-### Analytics & Insights
-- Dashboard with visual charts and summaries
-- Expense category trends and monthly summaries
-- Predictive insights based on historical expense data
+Update user by:
 
----
+ID
 
-## Notes
-This project is under active development.  
-APIs and structure may evolve as new features are added.  
+Username
 
-The backend follows **stateless, production-ready authentication practices** using JWT and Spring Security, making it suitable for real-world RESTful applications.
+Delete user by:
+
+ID
+
+Username
+
+💳 Expense Management
+
+Add a new expense
+
+Get all expenses (paginated)
+
+Update expense by ID
+
+Delete expense by ID
+
+Filter expenses by:
+
+Expense type (ExpenseType)
+
+Title
+
+Category
+
+🗂️ Category Management
+
+Create a category
+
+Get all categories (paginated)
+
+Get category by name
+
+Update category by name
+
+Delete category by name
+
+Prevent duplicate categories
+
+📡 API Endpoints
+🔑 Authentication
+Method	Endpoint	Description
+POST	/login	Authenticate user & get JWT
+👤 Users
+Method	Endpoint	Description
+POST	/users/register	Register a new user
+GET	/users	Get all users (paginated)
+GET	/users/username/{username}	Get user by username
+PUT	/users/id/{id}	Update user by ID
+PUT	/users/username/{username}	Update user by username
+DELETE	/users/id/{id}	Delete user by ID
+DELETE	/users/{username}	Delete user by username
+💳 Expenses
+Method	Endpoint	Description
+POST	/expenses/addExpense	Add a new expense
+GET	/expenses/	Get all expenses (paginated)
+GET	/expenses/type/{type}	Filter by expense type
+GET	/expenses/title/{title}	Filter by title
+GET	/expenses/category/{category}	Filter by category
+PUT	/expenses/{id}	Update expense by ID
+DELETE	/expenses/delete/{id}	Delete expense by ID
+🗂️ Categories
+Method	Endpoint	Description
+POST	/categories/addCategory	Create a category
+GET	/categories/	Get all categories (paginated)
+GET	/categories/{name}	Get category by name
+PUT	/categories/{name}	Update category by name
+DELETE	/categories/delete/{name}	Delete category by name
+⚠️ Exception Handling
+
+Global exception handling is implemented using @ControllerAdvice.
+
+Custom Exceptions
+
+User not found
+
+Duplicate username
+
+Expense not found
+
+Category not found
+
+Duplicate category
+
+Error Response Format
+{
+  "timestamp": "2026-01-30T10:15:30",
+  "status": 404,
+  "error": "NOT_FOUND",
+  "message": "User not found"
+}
+
+✅ Validation
+
+Request DTO validation using @Valid
+
+Prevents invalid or incomplete data
+
+Ensures clean API contracts
+
+🛠️ Tech Stack
+
+Java
+
+Spring Boot
+
+Spring Web
+
+Spring Data JPA
+
+Spring Security
+
+JWT (JSON Web Token)
+
+Hibernate
+
+REST APIs
+
+Pageable & Pagination
+
+▶️ How to Run
+
+Clone the repository
+
+Open in IntelliJ IDEA / Eclipse
+
+Configure database credentials in application.properties
+
+Run ExpenseTrackerApplication
+
+Authenticate via /login to obtain JWT
+
+Use JWT in Authorization header:
+
+Authorization: Bearer <token>
+
+🔮 Future Enhancements
+
+Role-based authorization (Admin / User)
+
+Refresh tokens & token expiration handling
+
+Swagger / OpenAPI documentation
+
+Monthly expense reports & analytics
+
+Recurring expenses
+
+Docker & CI/CD support
+
+Audit logs & activity tracking
+
+📝 Notes
+
+This project follows clean architecture principles
+
+Designed to be scalable and production-ready
+
+APIs and structure may evolve as features are added
