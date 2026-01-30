@@ -1,7 +1,7 @@
 # 💸 Expense Tracker Backend
 
 A **Spring Boot–based RESTful backend** for an Expense Tracker application.  
-This project provides **secure user authentication**, **expense tracking**, and **category management**, following **clean architecture** and **production-ready practices**.
+This project provides secure JWT authentication, expense tracking, and category management, following clean architecture and production-ready best practices.
 
 ---
 
@@ -13,6 +13,7 @@ The Expense Tracker backend allows users to:
 - Authenticate securely using **JWT**
 - Create, update, delete, and filter expenses
 - Organize expenses using categories
+- Access APIs via Swagger / OpenAPI
 - Handle errors consistently with structured responses
 
 The application is **stateless**, **scalable**, and built using industry-standard Spring technologies.
@@ -74,10 +75,11 @@ src/main/java/com/ExpenseTracker
 ### 💳 Expense Management
 - Add a new expense
 - Get all expenses (paginated)
+- Get expense by ID
 - Update expense by ID
 - Delete expense by ID
 - Filter expenses by:
-  - Expense type (`ExpenseType`)
+  - Expense type
   - Title
   - Category
 
@@ -86,9 +88,9 @@ src/main/java/com/ExpenseTracker
 ### 🗂️ Category Management
 - Create a category
 - Get all categories (paginated)
-- Get category by name
-- Update category by name
-- Delete category by name
+- Get category by id
+- Update category by id
+- Delete category by id
 - Prevent duplicate categories
 
 
@@ -106,13 +108,13 @@ src/main/java/com/ExpenseTracker
 
 | Method | Endpoint | Description |
 |------|--------|------------|
-| POST | `/users/register` | Register a new user |
+| POST | `/users` | Register a new user |
 | GET | `/users` | Get all users (paginated) |
 | GET | `/users/username/{username}` | Get user by username |
 | PUT | `/users/id/{id}` | Update user by ID |
 | PUT | `/users/username/{username}` | Update user by username |
 | DELETE | `/users/id/{id}` | Delete user by ID |
-| DELETE | `/users/{username}` | Delete user by username |
+| DELETE | `/users/username/{username}` | Delete user by username |
 
 ---
 
@@ -120,13 +122,14 @@ src/main/java/com/ExpenseTracker
 
 | Method | Endpoint | Description |
 |------|--------|------------|
-| POST | `/expenses/addExpense` | Add a new expense |
-| GET | `/expenses/` | Get all expenses (paginated) |
+| POST | `/expenses` | Add a new expense |
+| GET | `/expenses` | Get all expenses (paginated) |
+| GET | `/expenses/{id}` | Get expense by ID |
 | GET | `/expenses/type/{type}` | Filter by expense type |
 | GET | `/expenses/title/{title}` | Filter by title |
 | GET | `/expenses/category/{category}` | Filter by category |
 | PUT | `/expenses/{id}` | Update expense by ID |
-| DELETE | `/expenses/delete/{id}` | Delete expense by ID |
+| DELETE | `/expenses/{id}` | Delete expense by ID |
 
 ---
 
@@ -134,11 +137,20 @@ src/main/java/com/ExpenseTracker
 
 | Method | Endpoint | Description |
 |------|--------|------------|
-| POST | `/categories/addCategory` | Create a category |
-| GET | `/categories/` | Get all categories (paginated) |
-| GET | `/categories/{name}` | Get category by name |
-| PUT | `/categories/{name}` | Update category by name |
-| DELETE | `/categories/delete/{name}` | Delete category by name |
+| POST | `/categories` | Create a category |
+| GET | `/categories` | Get all categories (paginated) |
+| GET | `/categories/{id}` | Get category by id |
+| PUT | `/categories/{id}` | Update category by id |
+| DELETE | `/categories/{id}` | Delete category by id |
+
+---
+
+# 📘 Swagger / OpenAPI Documentation
+
+Swagger UI is enabled for easy API exploration and testing.
+
+🔗 **Access it here:**  
+http://localhost:8080/swagger-ui/index.html
 
 ---
 
@@ -146,12 +158,17 @@ src/main/java/com/ExpenseTracker
 
 - Global exception handling is implemented using `@ControllerAdvice`.
 
-### Custom Exceptions
-- User not found
-- Duplicate username
-- Expense not found
-- Category not found
-- Duplicate category
+- All exceptions are handled in a single centralized class
+- Each exception is mapped to a predefined `ErrorCode`
+- HTTP status codes are derived from the associated `ErrorCode`
+- Ensures consistent error responses across all APIs
+
+### Supported Error Codes
+- USER_NOT_FOUND
+- DUPLICATE_USERNAME
+- CATEGORY_NOT_FOUND
+- EXPENSE_NOT_FOUND
+- DUPLICATE_CATEGORY
 
 ---
 
@@ -192,7 +209,6 @@ src/main/java/com/ExpenseTracker
 
 - Role-based authorization (Admin / User)
 - Refresh tokens & token expiration handling
-- Swagger / OpenAPI documentation
 - Monthly expense reports & analytics
 - Recurring expenses
 - Docker & CI/CD support
@@ -204,6 +220,7 @@ src/main/java/com/ExpenseTracker
 
 - This project follows clean architecture principles
 - Designed to be scalable and production-ready
+- Swagger-documented and production-ready
 - APIs and structure may evolve as features are added
 
 
