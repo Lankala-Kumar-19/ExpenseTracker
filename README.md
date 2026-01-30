@@ -35,7 +35,7 @@ src/main/java/com/ExpenseTracker
 ├── services        # Business logic
 │
 └── ExpenseTrackerApplication.java
-
+```
 ## 🔐 Security & Authentication
 
 ### 🔒 Authentication Mechanism
