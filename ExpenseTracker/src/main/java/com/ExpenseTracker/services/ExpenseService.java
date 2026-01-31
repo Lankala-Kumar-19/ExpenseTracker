@@ -147,4 +147,14 @@ public class ExpenseService {
 
         expenseRepository.delete(expense);
     }
+
+    public void deleteExpenseByName(int id) {
+        Users user = getLoggedInUser();
+
+        Expense expense = expenseRepository
+                .findByUserAndId(user, id)
+                .orElseThrow(ExpenseNotFoundException::new);
+
+        expenseRepository.delete(expense);
+    }
 }
