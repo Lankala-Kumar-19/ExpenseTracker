@@ -211,7 +211,6 @@ http://localhost:8080/swagger-ui/index.html
 - Refresh tokens & token expiration handling
 - Monthly expense reports & analytics
 - Recurring expenses
-- Docker & CI/CD support
 - Audit logs & activity tracking
 
 ---
