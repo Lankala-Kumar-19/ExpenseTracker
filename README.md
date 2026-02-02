@@ -1,7 +1,7 @@
 # 💸 Expense Tracker Backend
 
 A **Spring Boot–based RESTful backend** for an Expense Tracker application.  
-This project provides secure JWT authentication, expense tracking, and category management, following clean architecture and production-ready best practices.
+This project provides secure JWT authentication, expense tracking, and category management, following clean architecture and production-ready best practice.
 
 ---
 
