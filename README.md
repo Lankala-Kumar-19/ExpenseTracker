@@ -1,7 +1,7 @@
 # 💸 Expense Tracker Backend
 
 A **Spring Boot–based RESTful backend** for an Expense Tracker application.  
-This project provides secure JWT authentication, expense tracking, and category management, following clean architecture and production-ready best practices.
+This project provides secure JWT authentication, expense tracking, and category management, following clean architecture and production-ready best practice.
 
 ---
 
@@ -211,7 +211,6 @@ http://localhost:8080/swagger-ui/index.html
 - Refresh tokens & token expiration handling
 - Monthly expense reports & analytics
 - Recurring expenses
-- Docker & CI/CD support
 - Audit logs & activity tracking
 
 ---
