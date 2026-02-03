@@ -10,6 +10,8 @@ import com.ExpenseTracker.mappers.UserMapper;
 import com.ExpenseTracker.repos.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,15 @@ public class UserService {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
+    public UserResponseDTO getCurrentUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication==null || !authentication.isAuthenticated()){
+            throw new UserNotFoundException("no authenticated user found");
+        }
+        String username = authentication.getName();
+        return getUserByUsernamee(username);
     }
 
     public Users getUserByUsername(String username) {

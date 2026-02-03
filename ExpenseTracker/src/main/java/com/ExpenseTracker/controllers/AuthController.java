@@ -4,6 +4,9 @@ import com.ExpenseTracker.config.CustomUserDetailsService;
 import com.ExpenseTracker.config.JwtUtil;
 import com.ExpenseTracker.dtos.LoginRequestDTO;
 import com.ExpenseTracker.dtos.LoginResponseDTO;
+import com.ExpenseTracker.dtos.UserRequestDTO;
+import com.ExpenseTracker.dtos.UserResponseDTO;
+import com.ExpenseTracker.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,11 +24,13 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
     private final CustomUserDetailsService customUserDetailsService;
+    private final UserService userService;
 
-    public AuthController(AuthenticationManager authenticationManager,JwtUtil jwtUtil,CustomUserDetailsService customUserDetailsService){
+    public AuthController(AuthenticationManager authenticationManager,JwtUtil jwtUtil,CustomUserDetailsService customUserDetailsService,UserService userService){
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.customUserDetailsService = customUserDetailsService;
+        this.userService = userService;
     }
 
     @PostMapping("/login")
@@ -38,5 +43,12 @@ public class AuthController {
 
         LoginResponseDTO responseDTO = new LoginResponseDTO(token, "Bearer");
         return ResponseEntity.ok(responseDTO);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<UserResponseDTO> register(
+            @Valid @RequestBody UserRequestDTO dto) {
+
+        return ResponseEntity.status(201).body(userService.register(dto));
     }
 }

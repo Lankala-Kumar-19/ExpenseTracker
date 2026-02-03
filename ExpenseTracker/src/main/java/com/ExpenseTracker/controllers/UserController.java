@@ -20,15 +20,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
-    public ResponseEntity<UserResponseDTO> register(
-            @Valid @RequestBody UserRequestDTO dto) {
 
-        return ResponseEntity.status(201).body(userService.register(dto));
+
+
+    @GetMapping("/me")
+    public ResponseEntity<UserResponseDTO> getCurrentUser(){
+        return ResponseEntity.ok(userService.getCurrentUser());
     }
-
-
-
     @GetMapping
     public ResponseEntity<Page<UserResponseDTO>> getAllUsers(Pageable pageable) {
         return ResponseEntity.ok(userService.getAllUsers(pageable));
