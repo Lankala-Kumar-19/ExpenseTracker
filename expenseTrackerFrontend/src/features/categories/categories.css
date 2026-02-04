@@ -1,0 +1,192 @@
+.page.categories-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Page title */
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  color: #111827;
+}
+
+/* Error message */
+.error {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Form row */
+.form-row {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.form-row input {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.form-row input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.form-row button {
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.form-row button:hover {
+  background: #2563eb;
+}
+
+/* Grid container */
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+/* Card styling with animated gradient background */
+.category-card {
+  background: linear-gradient(135deg, #3b82f6, #06b6d4, #3b82f6);
+  background-size: 300% 300%;
+  border-radius: 16px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s, box-shadow 0.3s, background-position 3s;
+  color: #fff;
+  font-weight: 500;
+  min-height: 120px;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  background-position: 100% 100%;
+  cursor: pointer;
+}
+
+.category-card h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.category-card input {
+  padding: 0.5rem;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+  width: 100%;
+  transition: transform 0.3s;
+}
+
+/* Card actions */
+.card-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+.card-actions button {
+  padding: 0.4rem 0.8rem;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s;
+}
+
+.card-actions .edit {
+  background: #2563eb;
+  color: #fff;
+}
+.card-actions .edit:hover {
+  background: #1d4ed8;
+}
+
+.card-actions .delete {
+  background: #ef4444;
+  color: #fff;
+}
+.card-actions .delete:hover {
+  background: #dc2626;
+}
+
+.card-actions .save {
+  background: #10b981;
+  color: #fff;
+}
+.card-actions .save:hover {
+  background: #059669;
+}
+
+.card-actions .cancel {
+  background: #6b7280;
+  color: #fff;
+}
+.card-actions .cancel:hover {
+  background: #4b5563;
+}
+
+/* Gradient animation */
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.category-card {
+  animation: gradientAnimation 6s ease infinite;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+  }
+
+  .form-row button {
+    width: 100%;
+  }
+
+  .card-actions {
+    flex-direction: column;
+  }
+
+  .card-actions button {
+    width: 100%;
+  }
+}
+
+
+.category-card.editing {
+  transform: scale(1.03);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
