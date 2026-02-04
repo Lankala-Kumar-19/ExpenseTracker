@@ -1,7 +1,9 @@
-# 💸 Expense Tracker Backend
+# 💸 Expense Tracker 
 
-A **Spring Boot–based RESTful backend** for an Expense Tracker application.  
+A **Spring Boot–based RESTful** for an Expense Tracker application.  
 This project provides secure JWT authentication, expense tracking, and category management, following clean architecture and production-ready best practice.
+
+**Live Demo:** [https://expense-tracker-tau-ten-61.vercel.app](https://expense-tracker-tau-ten-61.vercel.app)
 
 ---
 

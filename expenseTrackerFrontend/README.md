@@ -1,95 +1,81 @@
-# Expense Tracker - Frontend
+# Expense Tracker Frontend
 
-This is the **frontend** of the Expense Tracker application, built with **React**. It allows users to **view a landing page**, **login**, and **register**, while interacting with the backend API for expense management. The home page features a **full-screen background image** with **top-right Login/Register buttons** for easy navigation.
-
----
-
-## Features
-
-- Full-screen responsive landing page with background image  
-- Top-right **Login** and **Register** buttons  
-- Centered welcome text with short description  
-- Responsive layout for mobile and desktop  
-- Login and Register forms with state handling and API integration  
+A modern **React.js frontend** for an Expense Tracker application, featuring a **dashboard**, **expense management**, **categories**, and **authentication**. Built with **Vite**, **React Hooks**, and modern CSS design patterns, including **responsive cards** and an aesthetic **dashboard layout**.
 
 ---
 
-## Technologies Used
+## **Table of Contents**
 
-- React (with Hooks)  
-- React Router DOM (for navigation)  
-- CSS Flexbox and media queries for responsiveness  
-- Axios (via `API` service) for HTTP requests  
-- ES6+ JavaScript  
-
----
-
-## Project Structure
-
-The project folder is organized as follows:
-
-- **expense-tracker-frontend/**
-  - **public/**
-    - **assets/**
-      - `home.png` — Landing page background image
-  - **src/**
-    - **components/**
-      - `Home.jsx` — Landing page component
-      - `Login.jsx` — Login form component
-      - `Register.jsx` — Registration form component
-      - `Home.css` — Home page styles
-    - **services/**
-      - `api.js` — Axios instance for API calls
-    - `App.js` — Main app component
-  - `package.json`
-  - `README.md`
+- [Demo](#demo)  
+- [Features](#features)  
+- [Project Structure](#project-structure)  
+- [Technologies](#technologies)  
+- [Getting Started](#getting-started)  
+- [Available Scripts](#available-scripts)  
+- [License](#license)  
 
 ---
 
-## Installation
+## **Demo**
 
-1. Clone the repository:
+Screenshots of the application:
 
-
-2. Navigate to the frontend folder: cd expense-tracker-frontend
-
-
-3. Install dependencies:
-
-npm install
-
+![Dashboard](./output/dashboard.png)  
+![Expenses](./output/expenses.png)  
+![Add Expense](./output/addExpense.png)  
+![Categories](./output/categories.png)  
+![Login](./output/login.png)  
+![Register](./output/register.png)  
 
 ---
 
-## Running the App
+## **Features**
 
-Start the development server:
-
-npm start
-
-
-The app will run at `http://localhost:5173`. Make sure your backend API is running to enable login and registration functionality.
-
----
-
-## Usage
-
-- **Home Page:** Displays a full-screen background image with Login/Register buttons at the top-right.  
-- **Login Page:** Enter your username and password to log in. Token is stored in `localStorage`.  
-- **Register Page:** Create a new account with username, email, and password. Token is stored in `localStorage`.
+- **Dashboard**: Clean overview of expenses and categories.  
+- **Expense Management**:  
+  - Add, edit, delete expenses  
+  - Inline editing on expense cards  
+  - Category selection with searchable dropdown  
+- **Categories**: Manage expense categories.  
+- **Authentication**: Login, register, and logout.  
+- **Responsive Design**: Works on desktop and mobile devices.  
+- **Modern UI**: Cards, gradients, shadows, hover effects, and badges.  
 
 ---
 
-## Notes
+## **Project Structure**
 
-- Ensure the backend API endpoints match the paths used in `API.js` (`/login` and `/users/register`).  
-- Background images should be placed in `public/assets/` to load properly.  
-- The app is **fully responsive**, but you can customize styles in `Home.css` for branding.  
+```text
+expenseTrackerFrontend/
+├── public/                 # Static assets
+├── src/
+│   ├── assets/             # Images and logos
+│   ├── features/           # Feature modules
+│   │   ├── auth/           # Authentication pages and services
+│   │   ├── categories/     # Category pages and services
+│   │   ├── dashboard/      # Dashboard page
+│   │   └── expenses/       # Expenses page and services
+│   ├── layouts/            # Layouts (Auth & Dashboard)
+│   ├── routes/             # App routing
+│   ├── services/           # API/http client
+│   ├── App.jsx
+│   └── main.jsx
+├── .gitignore
+├── package.json
+└── vite.config.js
 
----
+## **Technologies**
 
-## License
+- **React.js** (Functional Components & Hooks)  
+- **Vite** (Fast frontend bundler)  
+- **React Router DOM** (Routing)  
+- **JavaScript (ES6+)**  
+- **CSS / Modern Responsive Design**  
+- **Axios / Fetch API** for HTTP requests  
 
-This project is **open-source** and free to use under the MIT License.
+
+
+
+
 
 
