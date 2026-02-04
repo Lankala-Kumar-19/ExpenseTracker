@@ -4,10 +4,13 @@ FROM maven:3.9.0-eclipse-temurin-17 AS builder
 # Set working directory
 WORKDIR /app
 
-# Copy Maven wrapper and pom.xml first for caching dependencies
+# Copy Maven wrapper and pom.xml first
 COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
+
+# Make mvnw executable
+RUN chmod +x mvnw
 
 # Download dependencies
 RUN ./mvnw dependency:go-offline -B
