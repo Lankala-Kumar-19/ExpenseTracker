@@ -106,6 +106,7 @@ const Categories = () => {
           Add
         </button>
       </div>
+      <small className="input-hint">Enter a category name like "Food", "Rent", or "Travel"</small>
 
       <div className="categories-grid">
         {categories.map((cat) => (
@@ -117,7 +118,9 @@ const Categories = () => {
                 onChange={(e) =>
                   setUpdateCategory({ ...updateCategory, name: e.target.value })
                 }
+                placeholder="e.g., Food, Rent, Utilities"
               />
+              
             ) : (
               <h3>{cat.name}</h3>
             )}

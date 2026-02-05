@@ -402,3 +402,20 @@ body {
     display: none; /* optional: hide logo on mobile */
   }
 }
+.auth-hint {
+  font-size: 12px;
+  color: black;
+  margin-top: 2px;
+  display: block;
+}
+.password-field {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+}

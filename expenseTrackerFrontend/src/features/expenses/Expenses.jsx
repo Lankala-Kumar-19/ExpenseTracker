@@ -144,6 +144,7 @@ const Expenses = () => {
           onChange={handleChange}
           required
         />
+        <small className="input-hint">Enter a short title for the expense or income e.g., Grocery, Rent, Salary</small>
 
         <input
           name="description"
@@ -151,6 +152,7 @@ const Expenses = () => {
           placeholder="Description"
           onChange={handleChange}
         />
+         <small className="input-hint">Optional: Add details about this expense e.g., Bought fruits and vegetables</small>
 
         <input
           type="number"
@@ -160,6 +162,7 @@ const Expenses = () => {
           onChange={handleChange}
           required
         />
+        <small className="input-hint">Enter the amount in Rupees e.g., 50, 1200, 15.75</small>
 
         <div className="radio-group">
           <label>

@@ -15,6 +15,14 @@
   color: #111827;
 }
 
+.input-hint {
+  font-size: 12px;
+  color: #666;
+  margin-top: 2px;
+  display: block;
+}
+
+
 /* Error message */
 .error {
   background: #fee2e2;

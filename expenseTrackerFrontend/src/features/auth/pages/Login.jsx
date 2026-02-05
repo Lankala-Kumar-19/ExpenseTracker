@@ -16,6 +16,9 @@ const Login = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  // State to toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -40,47 +43,54 @@ const Login = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-    return (
+  return (
     <form className="auth-form" onSubmit={handleSubmit}>
-  <h2 className="auth-title">Welcome Back</h2>
-  <p className="auth-subtitle">Sign in to continue</p>
+      <h2 className="auth-title">Welcome Back</h2>
+      <p className="auth-subtitle">Sign in to continue</p>
 
-  <div className="auth-field">
-    <input
-      name="username"
-      placeholder="Username"
-      value={form.username}
-      onChange={handleChange}
-      required
-    />
-  </div>
+      <div className="auth-field">
+        <input
+          name="username"
+          placeholder="Username"
+          value={form.username}
+          onChange={handleChange}
+          required
+        />
+      </div>
 
-  <div className="auth-field">
-    <input
-      name="password"
-      type="password"
-      placeholder="Password"
-      value={form.password}
-      onChange={handleChange}
-      required
-    />
-  </div>
+      <div className="auth-field password-field">
+        <input
+          name="password"
+          type={showPassword ? "text" : "password"} // toggle type
+          placeholder="Password"
+          value={form.password}
+          onChange={handleChange}
+          required
+        />
+        {/* Eye icon */}
+        <span
+          className="password-toggle"
+          onClick={() => setShowPassword((prev) => !prev)}
+          style={{ cursor: "pointer" }}
+        >
+          {showPassword ? "🙈" : "👁️"}
+        </span>
+      </div>
 
-  {error && <p className="auth-error">{error}</p>}
+      {error && <p className="auth-error">{error}</p>}
 
-  <button className="auth-btn primary" type="submit" disabled={isLoading}>
-    {isLoading ? "Logging in..." : "Login"}
-  </button>
+      <button className="auth-btn primary" type="submit" disabled={isLoading}>
+        {isLoading ? "Logging in..." : "Login"}
+      </button>
 
-  <button
-    className="auth-btn secondary"
-    type="button"
-    onClick={() => navigate("/register")}
-  >
-    Create account
-  </button>
-</form>
-
+      <button
+        className="auth-btn secondary"
+        type="button"
+        onClick={() => navigate("/register")}
+      >
+        Create account
+      </button>
+    </form>
   );
 };
 
