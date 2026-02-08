@@ -63,6 +63,9 @@ public class UserService {
         if (userRepository.findByUsername(dto.getUsername()).isPresent()) {
             throw new DulpicateUsernameException("Duplicate username");
         }
+        if (userRepository.findByMail(dto.getMail()).isPresent()) {
+            throw new DulpicateUsernameException("Duplicate username");
+        }
 
         Users user = userMapper.toEntity(dto);
         user.setRole(Role.ADMIN);

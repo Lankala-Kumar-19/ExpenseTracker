@@ -55,6 +55,7 @@ public class SecurityConfig {
                                 "/webjars/**",
                                 "/swagger-resources/**"
                         ).permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
 //                .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session->session

@@ -37,6 +37,11 @@ public class GlobalExceptionHandler {
         return buildError(ErrorCode.DUPLICATE_CATEGORY, ex.getMessage());
     }
 
+    @ExceptionHandler(DuplicateMailException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicateMail(DuplicateMailException ex){
+        return buildError(ErrorCode.DUPLICATE_MAIL,ex.getMessage());
+    }
+
     private ResponseEntity<ErrorResponse> buildError(ErrorCode errorCode, String message) {
         ErrorResponse errorResponse = ErrorResponse.of(errorCode, message);
         return new ResponseEntity<>(errorResponse, errorCode.getHttpStatus());

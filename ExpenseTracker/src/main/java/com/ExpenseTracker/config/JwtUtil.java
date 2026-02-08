@@ -1,5 +1,6 @@
 package com.ExpenseTracker.config;
 
+import com.ExpenseTracker.ENUMs.Role;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -18,17 +19,27 @@ public class JwtUtil {
     private Key getSigningKey(){
         return Keys.hmacShaKeyFor(SECERT_KEY.getBytes());
     }
-    public String generateToken(String username){
+    public String generateToken(String username, Role role){
         return Jwts.builder()
                 .setSubject(username)
+                .claim("role",role.name())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+exp))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public boolean validateToken(String username,String token){
-        return getUsername(token).equals(username) && !isTokenExpired(token);
+    public boolean validateToken(String token){
+//        return getUsername(token).equals(username) && !isTokenExpired(token);
+        try{
+            Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
+                    .parseClaimsJws(token);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
     public String getUsername(String token){
         try{
@@ -40,6 +51,18 @@ public class JwtUtil {
                     .getSubject();
         }catch (Exception e){
             return null;
+        }
+    }
+    public String getRole(String token){
+        try{
+            return Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .get("role",String.class);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
     private boolean isTokenExpired(String token){

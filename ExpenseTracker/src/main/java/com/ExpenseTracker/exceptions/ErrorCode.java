@@ -7,6 +7,7 @@ public enum ErrorCode {
     // User errors
     USER_NOT_FOUND(HttpStatus.NOT_FOUND),
     DUPLICATE_USERNAME(HttpStatus.BAD_REQUEST),
+    DUPLICATE_MAIL(HttpStatus.BAD_REQUEST),
 
     // Expense errors
     EXPENSE_NOT_FOUND(HttpStatus.NOT_FOUND),

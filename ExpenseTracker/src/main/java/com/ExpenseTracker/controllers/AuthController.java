@@ -1,5 +1,6 @@
 package com.ExpenseTracker.controllers;
 
+import com.ExpenseTracker.config.CustomUserDetails;
 import com.ExpenseTracker.config.CustomUserDetailsService;
 import com.ExpenseTracker.config.JwtUtil;
 import com.ExpenseTracker.dtos.LoginRequestDTO;
@@ -35,10 +36,10 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@Valid @RequestBody LoginRequestDTO dto){
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getUsername(),dto.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getUsername(),dto.getPassword()));
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
-
-        String token = jwtUtil.generateToken(dto.getUsername());
+        String token = jwtUtil.generateToken(userDetails.getUsername(),userDetails.getRole());
 
 
         LoginResponseDTO responseDTO = new LoginResponseDTO(token, "Bearer");
