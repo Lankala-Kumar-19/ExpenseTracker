@@ -32,6 +32,7 @@ const Register = () => {
     try {
       const { confirmPassword, ...payload } = form; // exclude confirmPassword
       await registerUser(payload);
+      alert("user registration successfully");
       navigate("/login");
     } catch (err) {
       const backendMessage = err.response?.data?.message || err.response?.data?.errors;

@@ -83,7 +83,7 @@ public class AdminService {
 
     public ExpenseResponseDTO updateExpense(int id, ExpenseRequestDTO dto) {
         Expense expense = expenseRepository.findById(id).orElseThrow(ExpenseNotFoundException::new);
-        Category category = categoryRepository.findByName(dto.getCategoryName()).orElseThrow(()->new CategoryNotFoundException());
+        Category category = categoryRepository.findByName(dto.getCategoryName().toUpperCase()).orElseThrow(()->new CategoryNotFoundException());
 //        category.setName(dto.getCategoryName());
 
 
@@ -111,7 +111,9 @@ public class AdminService {
 
     public CategoryResponseDTO addCategory(CategoryRequestDTO dto) {
 
-        categoryRepository.findByName(dto.getName()).ifPresent(c -> {throw new DuplicateCategoryException();});
+        dto.setName(dto.getName().toUpperCase());
+
+        categoryRepository.findByName(dto.getName().toUpperCase()).ifPresent(c -> {throw new DuplicateCategoryException();});
 
         Category category = categoryRepository.save(categoryMapper.toEntity(dto));
 
@@ -121,15 +123,16 @@ public class AdminService {
 
     }
 
-    public CategoryResponseDTO updateCategory(long id, CategoryRequestDTO dto) {
-        Category category = categoryRepository.findById(id).orElseThrow(()-> new CategoryNotFoundException());
-        category.setName(dto.getName());
+    public CategoryResponseDTO updateCategory(String name, CategoryRequestDTO dto) {
+        name = name.toUpperCase();
+        Category category = categoryRepository.findByName(name).orElseThrow(CategoryNotFoundException::new);
+        category.setName(dto.getName().toUpperCase());
         categoryRepository.save(category);
         return categoryMapper.toDTO(category);
     }
 
-    public void deleteCategory(long id) {
-        Category category = categoryRepository.findById(id).orElseThrow(()-> new CategoryNotFoundException());
+    public void deleteCategory(String name) {
+        Category category = categoryRepository.findByName(name.toUpperCase()).orElseThrow(CategoryNotFoundException::new);
         categoryRepository.delete(category);
     }
 }

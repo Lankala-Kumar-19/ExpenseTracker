@@ -39,6 +39,8 @@ src/main/java/com/ExpenseTracker
 │
 └── ExpenseTrackerApplication.java
 ```
+
+---
 ## 🔐 Security & Authentication
 
 ### 🔒 Authentication Mechanism
@@ -49,15 +51,45 @@ src/main/java/com/ExpenseTracker
 - **Custom JWT filter** for request validation
 - **Custom `UserDetailsService` implementation**
 
----
+
 
 ### 🔄 Authentication Flow
 
 1. User sends credentials to the **`/login`** endpoint  
 2. Credentials are authenticated using **`AuthenticationManager`**  
-3. Upon successful authentication, a **JWT token** is generated  
-4. The JWT token is returned to the client  
-5. The token must be included in requests to access **protected endpoints**
+3. Upon successful authentication, a JWT token is generated
+4. The JWT contains:
+   - username (subject)
+   - role (USER / ADMIN)
+   - expiration time
+5. The token must be included in requests using:
+   Authorization: Bearer <token>
+
+---
+## 🛡️ Role-Based Access Control (RBAC)
+
+The application supports **role-based authorization** using Spring Security.
+
+### Roles
+- `USER` – Default role for registered users
+- `ADMIN` – Elevated privileges for system management
+
+### Enforcement
+- Roles are embedded inside the JWT as claims
+- Authorization is enforced using:
+  - `@PreAuthorize`
+  - `hasRole("ADMIN")`
+- Admin-only endpoints are protected under `/admin/**`
+
+### Admin Capabilities
+- View all users
+- Change user roles
+- Delete users (cannot delete self)
+- View, update, and delete **any expense**
+- Create, update, and delete **global categories**
+
+---
+
 
 ## ✨ Features
 
@@ -94,6 +126,19 @@ src/main/java/com/ExpenseTracker
 - Update category by id
 - Delete category by id
 - Prevent duplicate categories
+
+---
+
+## 🔐 Security Highlights
+
+- Stateless JWT authentication
+- Role-based authorization (USER / ADMIN)
+- BCrypt password hashing
+- Admin privilege isolation
+- Self-deletion prevention for admins
+- No database hit on each request (JWT-based auth)
+
+---
 
 
 ## 📡 API Endpoints
@@ -147,12 +192,31 @@ src/main/java/com/ExpenseTracker
 
 ---
 
+### 🔐 Admin APIs (ADMIN role required)
+
+| Method | Endpoint | Description |
+|------|--------|------------|
+| GET | `/admin/users` | Get all users (paginated) |
+| GET | `/admin/users/{username}` | Get user by username |
+| PUT | `/admin/users/{id}/role` | Change user role |
+| DELETE | `/admin/users/{id}` | Delete user |
+| GET | `/admin/expenses` | Get all expenses |
+| PUT | `/admin/expenses/{id}` | Update any expense |
+| DELETE | `/admin/expenses/{id}` | Delete any expense |
+| GET | `/admin/categories` | Get all categories |
+| POST | `/admin/categories` | Create category |
+| PUT | `/admin/categories/{name}` | Update category |
+| DELETE | `/admin/categories/{name}` | Delete category |
+
+---
+
 # 📘 Swagger / OpenAPI Documentation
 
-Swagger UI is enabled for easy API exploration and testing.
+⚠️ Swagger is enabled for development purposes only.
+
 
 🔗 **Access it here:**  
-http://localhost:8080/swagger-ui/index.html
+[http://localhost:8080/swagger-ui/index.html](https://expensetracker-2z0y.onrender.com/swagger-ui/index.html#/admin-controller/updateExpense)
 
 ---
 
@@ -209,8 +273,8 @@ http://localhost:8080/swagger-ui/index.html
 
 ## 🔮 Future Enhancements
 
-- Role-based authorization (Admin / User)
 - Refresh tokens & token expiration handling
+- Fine-grained permissions (ADMIN_READ, ADMIN_WRITE)
 - Monthly expense reports & analytics
 - Recurring expenses
 - Audit logs & activity tracking
