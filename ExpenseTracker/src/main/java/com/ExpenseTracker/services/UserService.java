@@ -68,7 +68,7 @@ public class UserService {
         }
 
         Users user = userMapper.toEntity(dto);
-        user.setRole(Role.ADMIN);
+        user.setRole(Role.USER);
         user.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         return userMapper.toDTO(userRepository.save(user));
     }

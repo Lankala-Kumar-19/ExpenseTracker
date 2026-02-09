@@ -63,10 +63,10 @@ public class AdminController {
         return ResponseEntity.ok(adminService.getAllCategories(pageable));
     }
 
-    @PostMapping("/categories")
-    public ResponseEntity<CategoryResponseDTO> addCategory(@RequestBody CategoryRequestDTO dto){
-        return ResponseEntity.ok(adminService.addCategory(dto));
-    }
+//    @PostMapping("/categories")
+//    public ResponseEntity<CategoryResponseDTO> addCategory(@RequestBody CategoryRequestDTO dto){
+//        return ResponseEntity.ok(adminService.addCategory(dto));
+//    }
 
     @PutMapping("/categories/{name}")
     public ResponseEntity<CategoryResponseDTO> updateCategory(@PathVariable String name,@RequestBody CategoryRequestDTO dto){

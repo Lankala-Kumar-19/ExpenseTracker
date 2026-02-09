@@ -109,19 +109,19 @@ public class AdminService {
         return categories.map(categoryMapper::toDTO);
     }
 
-    public CategoryResponseDTO addCategory(CategoryRequestDTO dto) {
-
-        dto.setName(dto.getName().toUpperCase());
-
-        categoryRepository.findByName(dto.getName().toUpperCase()).ifPresent(c -> {throw new DuplicateCategoryException();});
-
-        Category category = categoryRepository.save(categoryMapper.toEntity(dto));
-
-        return categoryMapper.toDTO(category);
-
-
-
-    }
+//    public CategoryResponseDTO addCategory(CategoryRequestDTO dto) {
+//
+//        dto.setName(dto.getName().toUpperCase());
+//
+//        categoryRepository.findByName(dto.getName().toUpperCase()).ifPresent(c -> {throw new DuplicateCategoryException();});
+//
+//        Category category = categoryRepository.save(categoryMapper.toEntity(dto));
+//
+//        return categoryMapper.toDTO(category);
+//
+//
+//
+//    }
 
     public CategoryResponseDTO updateCategory(String name, CategoryRequestDTO dto) {
         name = name.toUpperCase();
