@@ -1,10 +1,12 @@
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../features/auth/store/authStore";
 import "./dashboard.css";
-
 const DashboardLayout = () => {
+  const navigate = useNavigate();
   const logout = useAuthStore((state) => state.logout);
-
+  const {role} = useAuthStore();
+  console.log(role);
+  
   return (
     <div className="dashboard">
       <aside className="sidebar">
@@ -25,9 +27,11 @@ const DashboardLayout = () => {
 
       <div className="main">
         <header className="header">
+          {role=="ADMIN" && <button className="admin-btn" onClick={()=>navigate("/admin/dashboard")}>admin panel</button>}
           <button className="logout-btn" onClick={logout}>
             Logout
           </button>
+          
         </header>
 
         <main className="content">

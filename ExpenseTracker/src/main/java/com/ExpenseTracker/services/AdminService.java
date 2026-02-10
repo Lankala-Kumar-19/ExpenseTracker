@@ -123,16 +123,16 @@ public class AdminService {
 //
 //    }
 
-    public CategoryResponseDTO updateCategory(String name, CategoryRequestDTO dto) {
-        name = name.toUpperCase();
-        Category category = categoryRepository.findByName(name).orElseThrow(CategoryNotFoundException::new);
+    public CategoryResponseDTO updateCategory(long id, CategoryRequestDTO dto) {
+//        name = name.toUpperCase();
+        Category category = categoryRepository.findById(id).orElseThrow(CategoryNotFoundException::new);
         category.setName(dto.getName().toUpperCase());
         categoryRepository.save(category);
         return categoryMapper.toDTO(category);
     }
 
-    public void deleteCategory(String name) {
-        Category category = categoryRepository.findByName(name.toUpperCase()).orElseThrow(CategoryNotFoundException::new);
+    public void deleteCategory(long id) {
+        Category category = categoryRepository.findById(id).orElseThrow(CategoryNotFoundException::new);
         categoryRepository.delete(category);
     }
 }

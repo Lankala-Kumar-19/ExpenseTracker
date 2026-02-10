@@ -68,14 +68,14 @@ public class AdminController {
 //        return ResponseEntity.ok(adminService.addCategory(dto));
 //    }
 
-    @PutMapping("/categories/{name}")
-    public ResponseEntity<CategoryResponseDTO> updateCategory(@PathVariable String name,@RequestBody CategoryRequestDTO dto){
-        return ResponseEntity.ok(adminService.updateCategory(name,dto));
+    @PutMapping("/categories/{id}")
+    public ResponseEntity<CategoryResponseDTO> updateCategory(@PathVariable long id,@RequestBody CategoryRequestDTO dto){
+        return ResponseEntity.ok(adminService.updateCategory(id,dto));
     }
 
-    @DeleteMapping("/categories/{name}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable String name){
-        adminService.deleteCategory(name);
+    @DeleteMapping("/categories/{id}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable long id){
+        adminService.deleteCategory(id);
         return ResponseEntity.noContent().build();
     }
 }

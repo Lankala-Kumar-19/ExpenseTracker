@@ -15,6 +15,9 @@ const Register = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // 👁️ Toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -30,12 +33,13 @@ const Register = () => {
 
     setLoading(true);
     try {
-      const { confirmPassword, ...payload } = form; // exclude confirmPassword
+      const { confirmPassword, ...payload } = form;
       await registerUser(payload);
-      alert("user registration successfully");
+      alert("User registration successful");
       navigate("/login");
     } catch (err) {
-      const backendMessage = err.response?.data?.message || err.response?.data?.errors;
+      const backendMessage =
+        err.response?.data?.message || err.response?.data?.errors;
 
       if (err.response?.data?.errorCode === "DUPLICATE_USERNAME") {
         setError("Username already exists");
@@ -80,27 +84,43 @@ const Register = () => {
         <small className="auth-hint">Example: user@example.com</small>
       </div>
 
-      <div className="auth-field">
+      {/* Password */}
+      <div className="auth-field password-field">
         <input
           name="password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           placeholder="Password"
           value={form.password}
           onChange={handleChange}
           required
         />
-        <small className="auth-hint">Password should be 8-16 characters</small>
+        <span
+          className="password-toggle"
+          onClick={() => setShowPassword((prev) => !prev)}
+          style={{ cursor: "pointer" }}
+        >
+          {showPassword ? "🙈" : "👁️"}
+        </span>
+        <small className="auth-hint">Password should be 8–16 characters</small>
       </div>
 
-      <div className="auth-field">
+      {/* Confirm Password */}
+      <div className="auth-field password-field">
         <input
           name="confirmPassword"
-          type="password"
+          type={showPassword ? "text" : "password"}
           placeholder="Confirm Password"
           value={form.confirmPassword}
           onChange={handleChange}
           required
         />
+        <span
+          className="password-toggle"
+          onClick={() => setShowPassword((prev) => !prev)}
+          style={{ cursor: "pointer" }}
+        >
+          {showPassword ? "🙈" : "👁️"}
+        </span>
       </div>
 
       {error && <p className="auth-error">{error}</p>}

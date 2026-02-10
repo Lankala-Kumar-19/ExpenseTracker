@@ -86,7 +86,7 @@ The application supports **role-based authorization** using Spring Security.
 - Change user roles
 - Delete users (cannot delete self)
 - View, update, and delete **any expense**
-- Create, update, and delete **global categories**
+- View, update, and delete **any categories**
 
 ---
 
@@ -204,7 +204,6 @@ The application supports **role-based authorization** using Spring Security.
 | PUT | `/admin/expenses/{id}` | Update any expense |
 | DELETE | `/admin/expenses/{id}` | Delete any expense |
 | GET | `/admin/categories` | Get all categories |
-| POST | `/admin/categories` | Create category |
 | PUT | `/admin/categories/{name}` | Update category |
 | DELETE | `/admin/categories/{name}` | Delete category |
 

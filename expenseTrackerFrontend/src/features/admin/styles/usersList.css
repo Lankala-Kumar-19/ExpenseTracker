@@ -1,0 +1,101 @@
+/* Page wrapper */
+.users-page {
+  padding: 20px;
+}
+
+/* Back button */
+.users-page button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background-color: #4f46e5;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.users-page button:hover {
+  background-color: #4338ca;
+}
+
+/* Search input */
+.users-search {
+  margin: 15px 0;
+}
+
+.users-search input {
+  width: 280px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+/* Table styling */
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.users-table thead {
+  background-color: #f3f4f6;
+}
+
+.users-table th,
+.users-table td {
+  padding: 12px 14px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.users-table th {
+  font-weight: 600;
+  color: #374151;
+}
+
+.users-table tr {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.users-table tr:last-child {
+  border-bottom: none;
+}
+
+.users-table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+/* Role dropdown */
+.role-select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+/* Delete button */
+.delete-btn {
+  background-color: #ef4444;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.delete-btn:hover {
+  background-color: #dc2626;
+}
+
+/* Empty state */
+.no-users {
+  margin-top: 20px;
+  color: #6b7280;
+  font-size: 15px;
+}

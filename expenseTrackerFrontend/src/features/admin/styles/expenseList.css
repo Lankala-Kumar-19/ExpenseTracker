@@ -1,0 +1,148 @@
+/* Page wrapper */
+.expenses-page {
+  padding: 20px;
+}
+
+/* Grid layout for expenses */
+.expenses-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+/* Tablets */
+@media (min-width: 768px) {
+  .expenses-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Laptops & Desktops */
+@media (min-width: 1024px) {
+  .expenses-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+/* Search input */
+.search-input {
+  width: 100%;
+  max-width: 420px;
+  padding: 10px 14px;
+  margin: 10px 0 20px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+
+/* Back button */
+.expenses-page .back-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background-color: #4f46e5;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.expenses-page .back-btn:hover {
+  background-color: #4338ca;
+}
+
+/* Expense card */
+.expense-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.expense-card p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #374151;
+}
+
+/* Action buttons */
+.expense-actions {
+  margin-top: 10px;
+}
+
+.expense-actions button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.expense-actions .edit-btn {
+  background-color: #2563eb;
+  color: #fff;
+}
+
+.expense-actions .edit-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.expense-actions .delete-btn {
+  background-color: #ef4444;
+  color: #fff;
+}
+
+.expense-actions .delete-btn:hover {
+  background-color: #dc2626;
+}
+
+/* Edit form */
+.edit-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+}
+
+.edit-form input,
+.edit-form select {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+.edit-actions {
+  margin-top: 10px;
+}
+
+.edit-actions .save-btn {
+  background-color: #16a34a;
+  color: #fff;
+}
+
+.edit-actions .save-btn:hover {
+  background-color: #15803d;
+}
+
+.edit-actions .cancel-btn {
+  background-color: #6b7280;
+  color: #fff;
+}
+
+.edit-actions .cancel-btn:hover {
+  background-color: #4b5563;
+}
+
+/* Empty state */
+.no-expenses {
+  color: #6b7280;
+  margin-top: 20px;
+}

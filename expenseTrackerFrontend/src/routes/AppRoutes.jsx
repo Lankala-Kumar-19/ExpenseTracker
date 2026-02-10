@@ -8,7 +8,12 @@ import Categories from "../features/categories/Categories"
 import AuthLayout from "../layouts/AuthLayout/AuthLayout"
 import PrivateRoute from "./PrivateRoute"
 import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout"
-
+import AdminRoutes from "../routes/AdminRoutes";
+import AdminDashboard from "../features/admin/pages/AdminDashboard"
+import UsersList from "../features/admin/pages/UsersList"
+import ExpenseList from "../features/admin/pages/ExpensesList"
+import CategoriesList from "../features/admin/pages/CategoriesList"
+import AdminDashboardLayout from "../features/admin/pages/AdminDashboardLayout"
 const AppRoutes = () => {
     return(
         <Routes>
@@ -25,6 +30,16 @@ const AppRoutes = () => {
                     <Route path = "/categories" element={<Categories />} /> 
                 </Route>
             </Route>
+
+            <Route path="/admin" element={<AdminRoutes />}>
+                <Route element={<AdminDashboardLayout />}>
+                    <Route path="dashboard" element={<AdminDashboard />} />
+                    <Route path="users" element={<UsersList />} /> 
+                    <Route path="expenses" element={<ExpenseList />} />
+                    <Route path="categories" element={<CategoriesList />} />
+                </Route>  
+            </Route>
+
         </Routes>
     )
 }

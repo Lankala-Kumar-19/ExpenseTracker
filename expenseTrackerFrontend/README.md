@@ -1,6 +1,6 @@
-# Expense Tracker Frontend
+# 💸 Expense Tracker Frontend
 
-A modern **React.js frontend** for an Expense Tracker application, featuring a **dashboard**, **expense management**, **categories**, and **authentication**. Built with **Vite**, **React Hooks**, and modern CSS design patterns, including **responsive cards** and an aesthetic **dashboard layout**.
+A modern **React.js frontend** for an Expense Tracker application, featuring a **dashboard**, **expense management**, **categories**, **authentication**, and **admin management**. Built with **Vite**, **React Hooks**, and modern CSS design patterns, including **responsive cards** and an aesthetic **dashboard layout**.
 
 ---
 
@@ -31,15 +31,28 @@ Screenshots of the application:
 
 ## **Features**
 
-- **Dashboard**: Clean overview of expenses and categories.  
+### **User Features**
+- **Dashboard**: Overview of expenses and categories.  
 - **Expense Management**:  
   - Add, edit, delete expenses  
   - Inline editing on expense cards  
   - Category selection with searchable dropdown  
-- **Categories**: Manage expense categories.  
+- **Categories**: View and manage personal expense categories.  
 - **Authentication**: Login, register, and logout.  
 - **Responsive Design**: Works on desktop and mobile devices.  
 - **Modern UI**: Cards, gradients, shadows, hover effects, and badges.  
+
+### **Admin Features**
+- **Admin Dashboard**: Overview of system data (users, expenses, categories).  
+- **User Management**:  
+  - View all users  
+  - Update user roles  
+  - Delete users  
+- **Expense Management**:  
+  - View, update, and delete any user’s expense  
+- **Category Management**:  
+  - View, update, and delete categories  
+- **Role-Based Access Control**: Only accessible via `/admin` routes.  
 
 ---
 
@@ -47,22 +60,73 @@ Screenshots of the application:
 
 ```text
 expenseTrackerFrontend/
-├── public/                 # Static assets
-├── src/
-│   ├── assets/             # Images and logos
-│   ├── features/           # Feature modules
-│   │   ├── auth/           # Authentication pages and services
-│   │   ├── categories/     # Category pages and services
-│   │   ├── dashboard/      # Dashboard page
-│   │   └── expenses/       # Expenses page and services
-│   ├── layouts/            # Layouts (Auth & Dashboard)
-│   ├── routes/             # App routing
-│   ├── services/           # API/http client
+├── public
+│   └── vite.svg
+├── src
+│   ├── assets
+│   │   ├── images
+│   │   │   ├── home.png
+│   │   │   └── home1.png
+│   │   └── react.svg
+│   ├── features
+│   │   ├── admin
+│   │   │   ├── pages
+│   │   │   │   ├── AdminDashboard.jsx
+│   │   │   │   ├── AdminDashboardLayout.jsx
+│   │   │   │   ├── CategoriesList.jsx
+│   │   │   │   ├── ExpensesList.jsx
+│   │   │   │   └── UsersList.jsx
+│   │   │   ├── styles
+│   │   │   │   ├── categoriesList.css
+│   │   │   │   ├── dashboard.css
+│   │   │   │   ├── expenseList.css
+│   │   │   │   └── usersList.css
+│   │   │   └── adminService.js
+│   │   ├── auth
+│   │   │   ├── pages
+│   │   │   │   ├── Login.jsx
+│   │   │   │   ├── Logout.jsx
+│   │   │   │   └── Register.jsx
+│   │   │   ├── services
+│   │   │   │   ├── authService.js
+│   │   │   │   └── registerService.js
+│   │   │   └── store
+│   │   │       └── authStore.js
+│   │   ├── categories
+│   │   │   ├── Categories.jsx
+│   │   │   ├── categories.css
+│   │   │   └── categoryService.js
+│   │   ├── dashboard
+│   │   │   └── Dashboard.jsx
+│   │   └── expenses
+│   │       ├── Expenses.jsx
+│   │       ├── expenseService.js
+│   │       └── expenses.css
+│   ├── layouts
+│   │   ├── AdminLayout
+│   │   │   └── AdminLayout.jsx
+│   │   ├── AuthLayout
+│   │   │   ├── AuthLayout.css
+│   │   │   └── AuthLayout.jsx
+│   │   └── DashboardLayout
+│   │       ├── DashboardLayout.jsx
+│   │       └── dashboard.css
+│   ├── routes
+│   │   ├── AdminRoutes.jsx
+│   │   ├── AppRoutes.jsx
+│   │   └── PrivateRoute.jsx
+│   ├── services
+│   │   └── httpClient.js
 │   ├── App.jsx
 │   └── main.jsx
 ├── .gitignore
+├── README.md
+├── eslint.config.js
+├── index.html
+├── package-lock.json
 ├── package.json
 └── vite.config.js
+
 
 ## **Technologies**
 

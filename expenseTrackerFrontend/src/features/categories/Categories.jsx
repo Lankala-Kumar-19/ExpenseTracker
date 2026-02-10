@@ -108,6 +108,12 @@ const Categories = () => {
       </div>
       <small className="input-hint">Enter a category name like "Food", "Rent", or "Travel"</small>
 
+      {!isLoading && categories.length === 0 && (
+  <p className="empty-message">
+    No categories yet. Create your first category above 👆
+  </p>
+)}
+
       <div className="categories-grid">
         {categories.map((cat) => (
           <div key={cat.id}

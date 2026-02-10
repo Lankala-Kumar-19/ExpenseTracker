@@ -1,5 +1,6 @@
 package com.ExpenseTracker.dtos;
 
+import com.ExpenseTracker.ENUMs.Role;
 import com.ExpenseTracker.entities.Expense;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,4 +15,5 @@ public class UserResponseDTO {
     private String username;
     private String mail;
     private List<ExpenseResponseDTO> expenses;
+    private Role role;
 }
